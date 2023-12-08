@@ -1,6 +1,8 @@
 services:
   mysql:
     image: 'mysql:latest'
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
     environment:
       - 'MYSQL_DATABASE=mydatabase'
       - 'MYSQL_PASSWORD=secret'
@@ -8,3 +10,14 @@ services:
       - 'MYSQL_USER=myuser'
     ports:
       - '3306'
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - mysql
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=verysecret
+    ports:
+      - "3001:80"
