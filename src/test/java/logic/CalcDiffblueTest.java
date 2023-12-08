@@ -1,8 +1,8 @@
-package com.example.diffbluedemo.logic;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+package logic;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalcDiffblueTest {
     /**

@@ -1,4 +1,4 @@
-package com.example.diffbluedemo.logic;
+package logic;
 
 public class Calc {
     public Integer add(Integer a, Integer b) {
