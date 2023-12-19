@@ -10,7 +10,7 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = '17' // Gradle の都合で 17 が安定する。Intellijの Gradle 設定も 17 にすること。
 }
 
 configurations {
