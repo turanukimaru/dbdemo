@@ -2,8 +2,8 @@ package logic;
 
 public class FizzBuzz {
     public String fizzBuzz(Integer x) {
-        if (x ==null  ){
-            throw new IllegalArgumentException("Null is not allowed");
+        if (x ==null || x == 0 ){
+            throw new IllegalArgumentException("not allowed argument "+x+".");
         }
         if (x % 5 ==0 && x % 3==0){
             return "FizzBuzz";
