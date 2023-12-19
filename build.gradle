@@ -3,7 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'org.hibernate.orm' version '6.4.0.Final'
-    id 'org.graalvm.buildtools.native' version '0.9.28'
+//    id 'org.graalvm.buildtools.native' version '0.9.28' // プロジェクト作成時に選択できるがバージョン互換性のせいかコンパイルが通らなくなる。
 }
 
 group = 'com.example'
@@ -25,6 +25,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -42,7 +43,7 @@ tasks.named('test') {
 
 hibernate {
     enhancement {
-        enableAssociationManagement = true
+//        enableAssociationManagement = true
     }
 }
 
