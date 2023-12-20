@@ -1,6 +1,9 @@
 package com.example.dbdemo.repo;
 
 import com.example.dbdemo.entity.Child;
+
+import java.util.List;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +11,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
-
-import java.util.List;
 
 @ContextConfiguration(classes = {ChildRepository.class})
 @EnableAutoConfiguration

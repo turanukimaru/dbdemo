@@ -15,7 +15,7 @@ class FizzBuzzDiffblueTest {
         assertThrows(IllegalArgumentException.class, () -> (new FizzBuzz()).fizzBuzz(null));
         assertEquals("Buzz", (new FizzBuzz()).fizzBuzz(5));
         assertEquals("Fizz", (new FizzBuzz()).fizzBuzz(3));
-        assertEquals("FizzBuzz", (new FizzBuzz()).fizzBuzz(0));
+        assertEquals("FizzBuzz", (new FizzBuzz()).fizzBuzz(15));
         assertThrows(IllegalArgumentException.class, () -> (new FizzBuzz()).fizzBuzz(0));
     }
 }
