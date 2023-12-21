@@ -1,14 +1,8 @@
 package com.example.dbdemo.app;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-
 import com.example.dbdemo.entity.Dummy;
 import com.example.dbdemo.usecase.DummyUseCase;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -22,9 +16,18 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+
+/**
+ * 自動生成されたテストを修正したもの。
+ */
 @ContextConfiguration(classes = {DummyController.class})
 @ExtendWith(SpringExtension.class)
-class DummyControllerDiffblueTest {
+class DummyController2DiffblueTest {
     @Autowired
     private DummyController dummyController;
 
@@ -35,17 +38,15 @@ class DummyControllerDiffblueTest {
      * Method under test: {@link DummyController#add(DummyAddRequest)}
      */
     @Test
-    void testAdd2() throws Exception {
-        ArrayList<Dummy> dummyList = new ArrayList<>();
-        dummyList.add(new Dummy());
-        when(dummyUseCase.allDummies()).thenReturn(dummyList);
+    void testAdd() throws Exception {
+        when(dummyUseCase.addDummy(any())).thenReturn(new Dummy());
 
         DummyAddRequest dummyAddRequest = new DummyAddRequest();
         dummyAddRequest.setComment("Comment");
         dummyAddRequest.setName("Name");
         dummyAddRequest.setText("Text");
         String content = (new ObjectMapper()).writeValueAsString(dummyAddRequest);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dummies")
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/dummies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
         MockMvcBuilders.standaloneSetup(dummyController)
@@ -54,37 +55,34 @@ class DummyControllerDiffblueTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("[{\"name\":null,\"text\":null,\"comment\":null,\"childList\":null,\"dummyId\":null}]"));
+                        .string("{\"name\":null,\"text\":null,\"comment\":null,\"childList\":null,\"dummyId\":null}"));
     }
-
     /**
-     * Method under test: {@link DummyController#add(DummyAddRequest)}
+     * 文字数のバリデーションが機能しているかのテスト。
      */
     @Test
-    void testAdd() throws Exception {
-        when(dummyUseCase.allDummies()).thenReturn(new ArrayList<>());
+    void testAddValidation() throws Exception {
 
         DummyAddRequest dummyAddRequest = new DummyAddRequest();
-        dummyAddRequest.setComment("Comment");
-        dummyAddRequest.setName("Name");
-        dummyAddRequest.setText("Text");
+        dummyAddRequest.setComment("");
+        dummyAddRequest.setName("");
+        dummyAddRequest.setText("");
         String content = (new ObjectMapper()).writeValueAsString(dummyAddRequest);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dummies")
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/dummies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
         MockMvcBuilders.standaloneSetup(dummyController)
                 .build()
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+        // バリデーションに引っかかるが例外処理をしていないためエラーメッセージはチェックしない。
     }
 
     /**
      * Method under test: {@link DummyController#add(Long, DummyAddRequest)}
      */
     @Test
-    void testAdd3() throws Exception {
+    void testEdit() throws Exception {
         when(dummyUseCase.editDummy(Mockito.<Dummy>any(), Mockito.<Long>any())).thenReturn(new Dummy());
 
         DummyAddRequest dummyAddRequest = new DummyAddRequest();
@@ -92,7 +90,7 @@ class DummyControllerDiffblueTest {
         dummyAddRequest.setName("Name");
         dummyAddRequest.setText("Text");
         String content = (new ObjectMapper()).writeValueAsString(dummyAddRequest);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/dummies/{id}", 1L)
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/dummies/1", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
         MockMvcBuilders.standaloneSetup(dummyController)
@@ -110,7 +108,7 @@ class DummyControllerDiffblueTest {
     @Test
     void testDelete() throws Exception {
         doNothing().when(dummyUseCase).deleteDummy(Mockito.<Long>any());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/dummies/{id}", 1L);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/dummies/1", 1L);
         MockMvcBuilders.standaloneSetup(dummyController)
                 .build()
                 .perform(requestBuilder)
@@ -123,7 +121,7 @@ class DummyControllerDiffblueTest {
     @Test
     void testDelete2() throws Exception {
         doNothing().when(dummyUseCase).deleteDummy(Mockito.<Long>any());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/dummies/{id}", 1L);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/dummies/1", 1L);
         requestBuilder.contentType("https://example.org/example");
         MockMvcBuilders.standaloneSetup(dummyController)
                 .build()

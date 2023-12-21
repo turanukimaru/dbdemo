@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 public class Dummy {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long DummyId;
     @Column
     private String name;

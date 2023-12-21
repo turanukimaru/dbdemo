@@ -21,6 +21,9 @@ public class DummyService {
     public List<Dummy> getDummies() {
         return dummyRepository.findAll();
     }
+    public Dummy getDummy(Long id) {
+        return dummyRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
 
     public List<Child> getChildren(Long dummyId) {
         return childRepository.findByDummyId(dummyId);

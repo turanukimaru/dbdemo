@@ -26,8 +26,14 @@ public class DummyUseCase {
         return dummyService.getChildren(dummyId);
     }
     @Transactional
-    public Dummy newDummy() {
-        Dummy dummy = new Dummy("default name","default text","default comment");
+    public Dummy addDummy(Dummy dummy) {
+        dummyService.saveDummy(dummy);
+        return dummy;
+    }
+    @Transactional
+    public Dummy editDummy(Dummy dummy,Long id) {
+        Dummy old = dummyService.getDummy(id);
+        old.setName(dummy.getName());
         dummyService.saveDummy(dummy);
         return dummy;
     }

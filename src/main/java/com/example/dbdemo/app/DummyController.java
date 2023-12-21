@@ -3,6 +3,7 @@ package com.example.dbdemo.app;
 import com.example.dbdemo.entity.Child;
 import com.example.dbdemo.entity.Dummy;
 import com.example.dbdemo.usecase.DummyUseCase;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/dummies")
+@RequestMapping(value = "/dummies")
 public class DummyController {
     private final DummyUseCase dummyUseCase;
 
@@ -23,9 +24,15 @@ public class DummyController {
     public List<Dummy> list() {
         return dummyUseCase.allDummies();
     }
-    @PutMapping
-    public Dummy add() {
-        return dummyUseCase.newDummy();
+
+    @PostMapping
+    public Dummy add(@RequestBody @Validated DummyAddRequest request) {
+        return dummyUseCase.addDummy(request.toDummy());
+
+    }
+    @PutMapping("/{id}")
+    public Dummy add(@PathVariable Long id,@RequestBody @Validated DummyAddRequest request) {
+        return dummyUseCase.editDummy(request.toDummy(),id);
 
     }
     @DeleteMapping("/{id}")
