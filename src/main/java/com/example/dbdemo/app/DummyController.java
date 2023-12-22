@@ -31,7 +31,7 @@ public class DummyController {
 
     }
     @PutMapping("/{id}")
-    public Dummy add(@PathVariable Long id,@RequestBody @Validated DummyAddRequest request) {
+    public Dummy edit(@PathVariable Long id,@RequestBody @Validated DummyAddRequest request) {
         return dummyUseCase.editDummy(request.toDummy(),id);
 
     }

@@ -35,32 +35,6 @@ class DummyControllerDiffblueTest {
      * Method under test: {@link DummyController#add(DummyAddRequest)}
      */
     @Test
-    void testAdd2() throws Exception {
-        ArrayList<Dummy> dummyList = new ArrayList<>();
-        dummyList.add(new Dummy());
-        when(dummyUseCase.allDummies()).thenReturn(dummyList);
-
-        DummyAddRequest dummyAddRequest = new DummyAddRequest();
-        dummyAddRequest.setComment("Comment");
-        dummyAddRequest.setName("Name");
-        dummyAddRequest.setText("Text");
-        String content = (new ObjectMapper()).writeValueAsString(dummyAddRequest);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dummies")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(dummyController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string("[{\"name\":null,\"text\":null,\"comment\":null,\"childList\":null,\"dummyId\":null}]"));
-    }
-
-    /**
-     * Method under test: {@link DummyController#add(DummyAddRequest)}
-     */
-    @Test
     void testAdd() throws Exception {
         when(dummyUseCase.allDummies()).thenReturn(new ArrayList<>());
 
@@ -81,18 +55,20 @@ class DummyControllerDiffblueTest {
     }
 
     /**
-     * Method under test: {@link DummyController#add(Long, DummyAddRequest)}
+     * Method under test: {@link DummyController#add(DummyAddRequest)}
      */
     @Test
-    void testAdd3() throws Exception {
-        when(dummyUseCase.editDummy(Mockito.<Dummy>any(), Mockito.<Long>any())).thenReturn(new Dummy());
+    void testAdd2() throws Exception {
+        ArrayList<Dummy> dummyList = new ArrayList<>();
+        dummyList.add(new Dummy());
+        when(dummyUseCase.allDummies()).thenReturn(dummyList);
 
         DummyAddRequest dummyAddRequest = new DummyAddRequest();
         dummyAddRequest.setComment("Comment");
         dummyAddRequest.setName("Name");
         dummyAddRequest.setText("Text");
         String content = (new ObjectMapper()).writeValueAsString(dummyAddRequest);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/dummies/{id}", 1L)
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/dummies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
         MockMvcBuilders.standaloneSetup(dummyController)
@@ -101,7 +77,7 @@ class DummyControllerDiffblueTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"name\":null,\"text\":null,\"comment\":null,\"childList\":null,\"dummyId\":null}"));
+                        .string("[{\"name\":null,\"text\":null,\"comment\":null,\"childList\":null,\"dummyId\":null}]"));
     }
 
     /**
@@ -144,6 +120,30 @@ class DummyControllerDiffblueTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
+
+    /**
+     * Method under test: {@link DummyController#edit(Long, DummyAddRequest)}
+     */
+    @Test
+    void testEdit() throws Exception {
+        when(dummyUseCase.editDummy(Mockito.<Dummy>any(), Mockito.<Long>any())).thenReturn(new Dummy());
+
+        DummyAddRequest dummyAddRequest = new DummyAddRequest();
+        dummyAddRequest.setComment("Comment");
+        dummyAddRequest.setName("Name");
+        dummyAddRequest.setText("Text");
+        String content = (new ObjectMapper()).writeValueAsString(dummyAddRequest);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/dummies/{id}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(dummyController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string("{\"name\":null,\"text\":null,\"comment\":null,\"childList\":null,\"dummyId\":null}"));
     }
 
     /**
